@@ -42,7 +42,7 @@ class _WHomeState extends State<WHome> {
     }
     return Scaffold(
         appBar: appBar(),
-        body: (User_Prov.users.isNotEmpty && provider.matchs.data.isNotEmpty)
+        body: (provider.matchs.data.isNotEmpty)
             ? Container(
                 child: Row(
                 children: [

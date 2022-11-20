@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:projet1/constante/MyColors.dart';
 import 'package:projet1/firebase/authentification/authrntification.dart';
 import 'package:projet1/mobile/Mhome.dart';
-import 'package:projet1/splash_Screen.dart';
+import 'package:projet1/mobile/splash_Screen.dart';
+import 'package:projet1/web/Wsplash_Screen.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -156,7 +157,7 @@ class _LoginState extends State<Login> {
             if (erreur == "Good") {
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) {
-                return Splash_Screen();
+                return MSplash_Screen();
               }));
             }
           } else {
@@ -238,6 +239,8 @@ class _LoginState extends State<Login> {
 
   Widget password() {
     return TextField(
+            obscureText: true,
+
       controller: pass,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -260,6 +263,8 @@ class _LoginState extends State<Login> {
   Widget confirmePaswword() {
     return TextField(
       controller: Cpass,
+            obscureText: true,
+
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.only(

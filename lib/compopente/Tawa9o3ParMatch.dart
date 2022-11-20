@@ -1,5 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable, prefer_const_constructors, sized_box_for_whitespace, prefer_interpolation_to_compose_strings, file_names, non_constant_identifier_names
 
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projet1/Model/Matchs.dart';
@@ -20,19 +22,50 @@ class Tawaqo3ParMatch extends StatefulWidget {
 
 class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
   List<Usr> users = [];
+  bool Existe = false;
   @override
   void initState() {
+    List<Usr> lst = [];
     User_Provider User_Prov =
         Provider.of<User_Provider>(context, listen: false);
     users = User_Prov.users
         .where((element) =>
             element.email != FirebaseAuth.instance.currentUser!.email)
         .toList();
+    for (var element in User_Prov.users) {
+      if (element.taw
+          .where((element) => element.id == widget.match.id)
+          .isNotEmpty) {
+        setState(() {
+          lst.add(element);
+          Existe = true;
+        });
+      }
+    }
+    users.clear();
+    users.addAll(lst);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!Existe) {
+      return Card(
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: double.infinity,
+              child: Center(
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "Aucun Prédiction Pour Ce Match",
+                  style: TextStyle(fontSize: 15, color: MyColors.firsteColor),
+                ),
+              ),
+            ),
+          ));
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(users.length, (index) {
@@ -41,7 +74,7 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
                 .where((element) => element.id == widget.match.id)
                 .isNotEmpty
             ? userTawa9o3(users[index])
-            : Container();
+            : SizedBox();
       }),
     );
   }

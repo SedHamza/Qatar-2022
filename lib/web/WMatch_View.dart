@@ -67,7 +67,7 @@ class _WDetaillMatchState extends State<WDetaillMatch> {
                   children: [
                     Container(
                       child: match.type == "group"
-                          ? GroupeItem(T.indexOf(match.group))
+                          ? GroupeItem(T.indexOf(match.group), false)
                           : Container(),
                     ),
                     Padding(
@@ -104,7 +104,14 @@ class _WDetaillMatchState extends State<WDetaillMatch> {
                                   indent: 8,
                                   endIndent: 15,
                                 ),
-                                Tawaqo3ParMatch(GetMatchById(widget.id))
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                      focusColor: MyColors.HoverColor,
+                                      onTap: () {},
+                                      child: Tawaqo3ParMatch(
+                                          GetMatchById(widget.id))),
+                                )
                               ],
                             ),
                           ),

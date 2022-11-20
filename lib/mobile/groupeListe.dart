@@ -36,7 +36,7 @@ class _GroupesState extends State<Groupes> {
                   physics: BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   child: Column(
-                    children: List.generate(8, (index) => GroupeItem(index)),
+                    children: List.generate(8, (index) => GroupeItem(index,true)),
                   ),
                 )),
     );

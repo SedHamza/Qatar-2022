@@ -36,7 +36,7 @@ class _GroupeViewState extends State<GroupeView> {
               BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: Column(
             children: [
-              GroupeItem(widget.index),
+              GroupeItem(widget.index,false),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(

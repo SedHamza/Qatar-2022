@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 
 class GroupeItem extends StatefulWidget {
   int index;
-  GroupeItem(this.index);
+  bool is_clicked;
+  GroupeItem(this.index, this.is_clicked);
 
   @override
   State<GroupeItem> createState() => _GroupeItemState();
@@ -41,9 +42,11 @@ class _GroupeItemState extends State<GroupeItem> {
         });
       },
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return GroupeView(widget.index);
-        }));
+        if (widget.is_clicked) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return GroupeView(widget.index);
+          }));
+        }
       },
       child: Card(
         color: isHover ? MyColors.HoverColor : MyColors.firsteColor,

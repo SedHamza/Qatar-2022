@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 bool isStareMatch(Match match) {
   DateTime now = DateTime.now();
-  now = DateTime.parse("2022-11-23 15:00:00");
+  //now = DateTime.parse("2022-11-23 15:00:00");
   //now.day = 11;
 
   if (match.finished == "true") {
@@ -79,7 +79,6 @@ int comptePts(Tawa9oa tawa9oa) {
     }
     if (tawa9oa.minBut! <= (match.awayScore + match.homeScore) &&
         tawa9oa.maxBut != -1) {
-
       pts += tawa9oa.minBut! + 1;
     }
     if (tawa9oa.qagne != -1) {

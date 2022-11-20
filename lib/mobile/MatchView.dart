@@ -44,7 +44,7 @@ class _DetaillMatchState extends State<DetaillMatch> {
         child: Column(
           children: [
             match.type == "group"
-                ? GroupeItem(T.indexOf(match.group))
+                ? GroupeItem(T.indexOf(match.group),true)
                 : Container(),
             Padding(
               padding: const EdgeInsets.all(8.0),

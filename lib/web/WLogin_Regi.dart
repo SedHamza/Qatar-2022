@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:projet1/constante/MyColors.dart';
+import 'package:projet1/constante/device_Size.dart';
 import 'package:projet1/firebase/authentification/authrntification.dart';
-import 'package:projet1/splash_Screen.dart';
+import 'package:projet1/mobile/splash_Screen.dart';
+import 'package:projet1/web/Wsplash_Screen.dart';
 import 'package:projet1/web/Whome.dart';
 
 class WLogin extends StatefulWidget {
@@ -108,7 +110,9 @@ class _WLoginState extends State<WLogin> {
                                         style: TextStyle(color: Colors.blue),
                                       )),
                                   InkWell(
-                                    onTap: send,
+                                    onTap: () {
+                                      send();
+                                    },
                                     child: Card(
                                       color: MyColors.firsteColor,
                                       elevation: 2,
@@ -169,7 +173,9 @@ class _WLoginState extends State<WLogin> {
             if (erreur == "Good") {
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) {
-                return Splash_Screen();
+                return Scrinetype.isMobile
+                    ? MSplash_Screen()
+                    : WSplash_Screen();
               }));
             }
           } else {
@@ -185,7 +191,6 @@ class _WLoginState extends State<WLogin> {
           });
         }
       } else {
-
         erreurName = "Entrer votre Nome";
       }
     } else {

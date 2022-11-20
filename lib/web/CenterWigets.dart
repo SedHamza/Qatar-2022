@@ -102,7 +102,7 @@ class _CenterPageState extends State<CenterPage> {
             Column(
               children:
                   List.generate(user.length > 3 ? 3 : user.length, (index) {
-                return UsersItems(user[index], index + 1, false);
+                return UsersItems(user[index], index, false);
               }),
             ),
           ],

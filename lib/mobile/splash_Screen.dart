@@ -4,18 +4,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:projet1/constante/MyColors.dart';
-import 'package:projet1/constante/device_Size.dart';
 import 'package:projet1/mobile/Mhome.dart';
-import 'package:projet1/web/Whome.dart';
 
-class Splash_Screen extends StatefulWidget {
-  Splash_Screen({Key? key}) : super(key: key);
+class MSplash_Screen extends StatefulWidget {
+  MSplash_Screen({Key? key}) : super(key: key);
 
   @override
-  State<Splash_Screen> createState() => _Splash_ScreenState();
+  State<MSplash_Screen> createState() => _MSplash_ScreenState();
 }
 
-class _Splash_ScreenState extends State<Splash_Screen>
+class _MSplash_ScreenState extends State<MSplash_Screen>
     with TickerProviderStateMixin {
   double _fontSize = 0.5;
   double _containerSize = 1.5;
@@ -56,11 +54,7 @@ class _Splash_ScreenState extends State<Splash_Screen>
 
     Timer(Duration(seconds: 4), () {
       setState(() {
-        if (Scrinetype.isWeb) {
-          Navigator.pushReplacement(context, PageTransition(WHome()));
-        } else {
-          Navigator.pushReplacement(context, PageTransition(MHome()));
-        }
+        Navigator.pushReplacement(context, PageTransition(MHome()));
       });
     });
   }
@@ -79,15 +73,14 @@ class _Splash_ScreenState extends State<Splash_Screen>
               AnimatedContainer(
                   duration: Duration(milliseconds: 2000),
                   curve: Curves.fastLinearToSlowEaseIn,
-                  height: _height * _fontSize - 10),
+                  height: _height * _fontSize),
               AnimatedOpacity(
-                duration: Duration(milliseconds: 1000),
-                opacity: _textOpacity,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Image(image: AssetImage("assets/Logo2.png")),
-                ),
-              ),
+                  duration: Duration(milliseconds: 1000),
+                  opacity: _textOpacity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Image(image: AssetImage("assets/Logo2.png")),
+                  )),
             ],
           ),
           Center(
@@ -96,17 +89,22 @@ class _Splash_ScreenState extends State<Splash_Screen>
               curve: Curves.fastLinearToSlowEaseIn,
               opacity: _containerOpacity,
               child: AnimatedContainer(
-                duration: Duration(milliseconds: 2000),
-                curve: Curves.fastLinearToSlowEaseIn,
-                height: _width / _containerSize,
-                width: _width / _containerSize,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Image(image: AssetImage("assets/Logo1.png")),
-              ),
+                  duration: Duration(milliseconds: 2000),
+                  curve: Curves.fastLinearToSlowEaseIn,
+                  height: _width / _containerSize,
+                  width: _width / _containerSize,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  // child: Image.asset('assets/images/file_name.png')
+                  child: Image(
+                      image: AssetImage(
+                          "assets/Logo1.png")) /* FlutterLogo(
+                  size: 200,
+                ),*/
+                  ),
             ),
           ),
         ],

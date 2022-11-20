@@ -8,9 +8,10 @@ import 'package:projet1/fonction/function.dart';
 import 'package:projet1/mobile/Login_Regi.dart';
 import 'package:projet1/mobile/Mhome.dart';
 import 'package:projet1/mobile/groupeListe.dart';
+import 'package:projet1/mobile/splash_Screen.dart';
 import 'package:projet1/provider/AllTeam.dart';
 import 'package:projet1/provider/Users_Prpvider.dart';
-import 'package:projet1/splash_Screen.dart';
+import 'package:projet1/web/Wsplash_Screen.dart';
 import 'package:projet1/web/WLogin_Regi.dart';
 import 'package:projet1/web/Whome.dart';
 import 'package:provider/provider.dart';
@@ -49,10 +50,10 @@ class _HomeState extends State<Home> {
   }
 
   Widget isWeb() {
-    return isLogin ? Splash_Screen() : WLogin();
+    return isLogin ? WSplash_Screen() : WLogin();
   }
 
   Widget isMobile() {
-    return isLogin ? Splash_Screen() : Login();
+    return isLogin ? MSplash_Screen() : Login();
   }
 }

@@ -12,6 +12,7 @@ import 'package:projet1/compopente/matchItem.dart';
 import 'package:projet1/constante/MyColors.dart';
 import 'package:projet1/firebase/addTawaqoa.dart';
 import 'package:projet1/fonction/function.dart';
+import 'package:projet1/main.dart';
 import 'package:projet1/mobile/Liste_Users.dart';
 import 'package:projet1/mobile/Login_Regi.dart';
 import 'package:projet1/mobile/Matchs.dart';
@@ -35,6 +36,8 @@ class _MHomeState extends State<MHome> {
   //List<Usr> user = [];
   @override
   Widget build(BuildContext context) {
+    User_Provider User_Prov = Provider.of<User_Provider>(context);
+
     provider = Provider.of<Team_provider>(context);
     List<Widget> Pages = [Home(), Groupes()];
     User_Prov = Provider.of<User_Provider>(context);
@@ -62,7 +65,6 @@ class _MHomeState extends State<MHome> {
         return a.pts.compareTo(b.pts);
       },
     );
-    // user = User_Prov.users;
     setState(() {});
     return Scaffold(
         appBar: appBar(),
@@ -93,17 +95,7 @@ class _MHomeState extends State<MHome> {
             ),
           ],
         ),
-        body: (User_Prov.users.isNotEmpty && provider.matchs.data.isNotEmpty)
-            ? Pages[currentIndex]
-            : Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: MyColors.firsteColor,
-                  ),
-                ),
-              ));
+        body: Pages[currentIndex]);
   }
 
   Widget Home() {
@@ -275,6 +267,8 @@ class _MHomeState extends State<MHome> {
       ),
       leading: InkWell(
         onTap: () {
+          MyApp.provider.getDataTeam();
+          User_Prov.getData();
           setState(() {});
           //provider.getDataTeam();
         },
