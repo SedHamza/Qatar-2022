@@ -22,11 +22,11 @@ class WHome extends StatefulWidget {
 
 class _WHomeState extends State<WHome> {
   Team_provider provider = Team_provider();
-
+  User_Provider User_Prov = User_Provider();
   @override
   Widget build(BuildContext context) {
     provider = Provider.of<Team_provider>(context);
-    User_Provider User_Prov = Provider.of<User_Provider>(context);
+    User_Prov = Provider.of<User_Provider>(context);
     for (var element in User_Prov.users) {
       int pts = 0;
       for (var elem in element.taw) {
@@ -61,7 +61,7 @@ class _WHomeState extends State<WHome> {
                     color: MyColors.firsteColor,
                   ),
                   Expanded(
-                      flex: 3,
+                      flex: 4,
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 6.0),
                         child: Container(
@@ -75,7 +75,7 @@ class _WHomeState extends State<WHome> {
                     color: MyColors.firsteColor,
                   ),
                   Expanded(
-                      flex: 4,
+                      flex: 3,
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 6.0),
                         child: Container(
@@ -106,7 +106,10 @@ class _WHomeState extends State<WHome> {
       ),
       leading: InkWell(
         onTap: () {
-          provider.getDataTeam();
+          setState(() {
+            provider.getDataTeam();
+            User_Prov.getData();
+          });
         },
         child: Icon(Icons.update_outlined),
       ),

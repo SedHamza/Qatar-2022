@@ -15,25 +15,9 @@ class ListUsers extends StatefulWidget {
 }
 
 class _ListUsersState extends State<ListUsers> {
-  List<Usr> user = [];
-
-  @override
-  void initState() {
-    User_Provider User_Prov =
-        Provider.of<User_Provider>(context, listen: false);
-    User_Prov.users.sort(
-      (b, a) {
-        if (a.pts == b.pts) {
-          return (-a.taw.length).compareTo(-(b.taw.length));
-        }
-        return a.pts.compareTo(b.pts);
-      },
-    );
-    user = User_Prov.users;
-  }
-
   @override
   Widget build(BuildContext context) {
+    User_Provider User_Prov = Provider.of<User_Provider>(context);
     return Scaffold(
       appBar: appBar(),
       body: Container(
@@ -44,8 +28,8 @@ class _ListUsersState extends State<ListUsers> {
             physics:
                 BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             child: Column(
-              children: List.generate(user.length, (index) {
-                return UsersItems(user[index], index, true);
+              children: List.generate(User_Prov.users.length, (index) {
+                return UsersItems(User_Prov.users[index], index, true);
               }),
             ),
           ),

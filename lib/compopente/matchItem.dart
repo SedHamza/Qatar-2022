@@ -23,6 +23,7 @@ class MatchItem extends StatefulWidget {
 class _MatchItemState extends State<MatchItem> {
   List<Match> match = [];
   bool isHover = false;
+
   @override
   Widget build(BuildContext context) {
     Team_provider provider = Provider.of<Team_provider>(context);
@@ -80,9 +81,13 @@ class _MatchItemState extends State<MatchItem> {
                       child: Column(
                         children: [
                           CircleAvatar(
-                            radius: 17.0,
-                            backgroundImage: NetworkImage(match.homeFlag),
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.grey,
+                            radius: 18,
+                            child: CircleAvatar(
+                              radius: 17.0,
+                              backgroundImage: NetworkImage(match.homeFlag),
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                           SizedBox(
                             height: 5,
@@ -108,7 +113,7 @@ class _MatchItemState extends State<MatchItem> {
                                   match.homeScore.toString(),
                                   style: TextStyle(
                                     fontSize: 25,
-                                    color: match.finished == "true"
+                                    color: match.finished == "TRUE"
                                         ? Colors.grey
                                         : Colors.red,
                                   ),
@@ -142,7 +147,7 @@ class _MatchItemState extends State<MatchItem> {
                                 child: Text(match.awayScore.toString(),
                                     style: TextStyle(
                                       fontSize: 25,
-                                      color: match.finished == "true"
+                                      color: match.finished == "TRUE"
                                           ? Colors.grey
                                           : Colors.red,
                                     )),
@@ -154,9 +159,13 @@ class _MatchItemState extends State<MatchItem> {
                       child: Column(
                         children: [
                           CircleAvatar(
-                            radius: 17.0,
-                            backgroundImage: NetworkImage(match.awayFlag),
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.grey,
+                            radius: 18,
+                            child: CircleAvatar(
+                              radius: 17.0,
+                              backgroundImage: NetworkImage(match.awayFlag),
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                           SizedBox(
                             height: 5,

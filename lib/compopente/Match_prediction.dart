@@ -1,5 +1,6 @@
-// ignore_for_file: camel_case_types, use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, sized_box_for_whitespace, avoid_unnecessary_containers, file_names, non_constant_identifier_names, prefer_interpolation_to_compose_strings, unnecessary_null_comparison, unused_import, duplicate_import
+// ignore_for_file: camel_case_types, use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, sized_box_for_whitespace, avoid_unnecessary_containers, file_names, non_constant_identifier_names, prefer_interpolation_to_compose_strings, unnecessary_null_comparison, unused_import, duplicate_import, deprecated_member_use
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/colors/gf_color.dart';
@@ -222,9 +223,13 @@ class _Match_predictionState extends State<Match_prediction> {
                 },
               ),
               CircleAvatar(
-                radius: 17.0,
-                backgroundImage: NetworkImage(widget.match.homeFlag),
-                backgroundColor: Colors.transparent,
+                backgroundColor: Colors.grey,
+                radius: 18,
+                child: CircleAvatar(
+                  radius: 17.0,
+                  backgroundImage: NetworkImage(widget.match.homeFlag),
+                  backgroundColor: Colors.transparent,
+                ),
               ),
               InkWell(
                 child: Icon(Icons.arrow_drop_down_outlined),
@@ -288,9 +293,13 @@ class _Match_predictionState extends State<Match_prediction> {
                 },
               ),
               CircleAvatar(
-                radius: 17.0,
-                backgroundImage: NetworkImage(widget.match.awayFlag),
-                backgroundColor: Colors.transparent,
+                backgroundColor: Colors.grey,
+                radius: 18,
+                child: CircleAvatar(
+                  radius: 17.0,
+                  backgroundImage: NetworkImage(widget.match.awayFlag),
+                  backgroundColor: Colors.transparent,
+                ),
               ),
               InkWell(
                 child: Icon(Icons.arrow_drop_down_outlined),
@@ -684,6 +693,13 @@ class _Match_predictionState extends State<Match_prediction> {
                   addPere(
                       [homeEx, awayEx, mxBut, mnBut, quiG], widget.match.id);
                   changeT();
+                  AwesomeDialog(
+                    context: context,
+                    animType: AnimType.TOPSLIDE,
+                    dialogType: DialogType.success,
+                    title: "Succès",
+                    desc: "Les Prédiction sont été envoyées avec succès",
+                  ).show();
                 },
                 child: Card(
                   color: MyColors.firsteColor,

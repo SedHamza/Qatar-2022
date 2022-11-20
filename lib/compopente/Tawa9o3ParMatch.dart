@@ -1,7 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable, prefer_const_constructors, sized_box_for_whitespace, prefer_interpolation_to_compose_strings, file_names, non_constant_identifier_names
 
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projet1/Model/Matchs.dart';
@@ -32,7 +30,7 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
         .where((element) =>
             element.email != FirebaseAuth.instance.currentUser!.email)
         .toList();
-    for (var element in User_Prov.users) {
+    for (var element in users) {
       if (element.taw
           .where((element) => element.id == widget.match.id)
           .isNotEmpty) {
@@ -50,21 +48,29 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
   @override
   Widget build(BuildContext context) {
     if (!Existe) {
-      return Card(
-          elevation: 5,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: double.infinity,
-              child: Center(
-                child: Text(
-                  textAlign: TextAlign.center,
-                  "Aucun Prédiction Pour Ce Match",
-                  style: TextStyle(fontSize: 15, color: MyColors.firsteColor),
+      return InkWell(
+        focusColor: MyColors.HoverColor,
+        onTap: () {},
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "Aucun Prédiction Pour Ce Match",
+                      style:
+                          TextStyle(fontSize: 15, color: MyColors.firsteColor),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ));
+              )),
+        ),
+      );
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,31 +95,35 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
 
   Widget tawa9o3(String nom, Tawa9oa tawa9oa) {
     if (!isStareMatchById(tawa9oa.id)) {
-      return Card(
-          elevation: 5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  nom + " :",
-                  style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: MyColors.firsteColor),
+      return InkWell(
+        onTap: () {},
+        focusColor: MyColors.HoverColor,
+        child: Card(
+            elevation: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    nom + " :",
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: MyColors.firsteColor),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Les données non disponibles actuellement seront disponibles au début du match",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15, color: MyColors.firsteColor),
-                ),
-              )
-            ],
-          ));
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Les données non disponibles actuellement seront disponibles au début du match",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 15, color: MyColors.firsteColor),
+                  ),
+                )
+              ],
+            )),
+      );
     }
 
     if (tawa9oa.awayEx != -1) {
@@ -126,6 +136,8 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
     Match match = GetMatchById(tawa9oa.id!);
 
     return InkWell(
+      focusColor: MyColors.HoverColor,
+      onTap: () {},
       child: Container(
         width: double.infinity,
         child: Card(
@@ -166,9 +178,13 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
                     Column(
                       children: [
                         CircleAvatar(
-                          radius: 17.0,
-                          backgroundImage: NetworkImage(match.homeFlag),
-                          backgroundColor: Colors.transparent,
+                          backgroundColor: Colors.grey,
+                          radius: 18,
+                          child: CircleAvatar(
+                            radius: 17.0,
+                            backgroundImage: NetworkImage(match.homeFlag),
+                            backgroundColor: Colors.transparent,
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -206,9 +222,13 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
                     Column(
                       children: [
                         CircleAvatar(
-                          radius: 17.0,
-                          backgroundImage: NetworkImage(match.awayFlag),
-                          backgroundColor: Colors.transparent,
+                          backgroundColor: Colors.grey,
+                          radius: 18,
+                          child: CircleAvatar(
+                            radius: 17.0,
+                            backgroundImage: NetworkImage(match.awayFlag),
+                            backgroundColor: Colors.transparent,
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -352,10 +372,12 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            maxBt(tawa9oa.maxBut!,
-                                        match.awayScore + match.homeScore)
-                                    .toString() +
-                                " Pts",
+                            tawa9oa.maxBut == -1
+                                ? "0"
+                                : maxBt(tawa9oa.maxBut!,
+                                            match.awayScore + match.homeScore)
+                                        .toString() +
+                                    " Pts",
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -365,7 +387,7 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
                             height: 5,
                           ),
                           Text(
-                            minBt(tawa9oa.maxBut!,
+                            minBt(tawa9oa.minBut!,
                                         match.awayScore + match.homeScore)
                                     .toString() +
                                 " Pts",
@@ -404,6 +426,8 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
     Match match = GetMatchById(tawa9oa.id!);
 
     return InkWell(
+      focusColor: MyColors.HoverColor,
+      onTap: () {},
       child: Card(
           elevation: 5,
           child: Container(
@@ -441,9 +465,13 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
                       Column(
                         children: [
                           CircleAvatar(
-                            radius: 17.0,
-                            backgroundImage: NetworkImage(match.homeFlag),
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.grey,
+                            radius: 18,
+                            child: CircleAvatar(
+                              radius: 17.0,
+                              backgroundImage: NetworkImage(match.homeFlag),
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -503,9 +531,13 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
                       Column(
                         children: [
                           CircleAvatar(
-                            radius: 17.0,
-                            backgroundImage: NetworkImage(match.awayFlag),
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.grey,
+                            radius: 18,
+                            child: CircleAvatar(
+                              radius: 17.0,
+                              backgroundImage: NetworkImage(match.awayFlag),
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -529,14 +561,20 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
   }
 
   int maxBt(int tM, int mM) {
-    if (tM > mM) {
+    if (tM == -1) {
+      return 0;
+    }
+    if (tM >= mM) {
       return 7 - tM + 1;
     }
     return 0;
   }
 
   int minBt(int tM, int mM) {
-    if (tM < mM) {
+    if (tM == -1) {
+      return 0;
+    }
+    if (tM <= mM) {
       return tM + 1;
     }
     return 0;

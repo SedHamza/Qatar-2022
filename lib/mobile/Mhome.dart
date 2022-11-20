@@ -8,6 +8,8 @@ import 'package:projet1/Model/Matchs.dart';
 import 'package:projet1/Model/Standings.dart';
 import 'package:projet1/Model/users.dart';
 import 'package:projet1/compopente/UserItem.dart';
+import 'package:projet1/compopente/bestAtack.dart';
+import 'package:projet1/compopente/bestDefender.dart';
 import 'package:projet1/compopente/matchItem.dart';
 import 'package:projet1/constante/MyColors.dart';
 import 'package:projet1/firebase/addTawaqoa.dart';
@@ -31,7 +33,6 @@ class MHome extends StatefulWidget {
 class _MHomeState extends State<MHome> {
   Team_provider provider = Team_provider();
   User_Provider User_Prov = User_Provider();
-
   int currentIndex = 0;
   //List<Usr> user = [];
   @override
@@ -41,31 +42,24 @@ class _MHomeState extends State<MHome> {
     provider = Provider.of<Team_provider>(context);
     List<Widget> Pages = [Home(), Groupes()];
     User_Prov = Provider.of<User_Provider>(context);
-    for (var element in User_Prov.users) {
-      int pts = 0;
-      for (var elem in element.taw) {
-        int pt = comptePts(elem);
-        pts += pt;
+    if (provider.matchs.data.isNotEmpty) {
+      for (var element in User_Prov.users) {
+        int pts = 0;
+        for (var elem in element.taw) {
+          int pt = comptePts(elem);
+          pts += pt;
 
-        if (pt != elem.pts) {
-          elem.pts = pt;
-          UpdateTaw(elem.id, pt, element.email);
+          if (pt != elem.pts) {
+            elem.pts = pt;
+            UpdateTaw(elem.id, pt, element.email);
+          }
         }
-      }
-      if (element.pts != pts) {
-        element.pts = pts;
-        UpdatePTS(pts, element.email);
+        if (element.pts != pts) {
+          element.pts = pts;
+          UpdatePTS(pts, element.email);
+        }
       }
     }
-    User_Prov.users.sort(
-      (b, a) {
-        if (a.pts == b.pts) {
-          return (-a.taw.length).compareTo(-(b.taw.length));
-        }
-        return a.pts.compareTo(b.pts);
-      },
-    );
-    setState(() {});
     return Scaffold(
         appBar: appBar(),
         bottomNavigationBar: BottomNavyBar(
@@ -110,6 +104,8 @@ class _MHomeState extends State<MHome> {
             children: [
               theBestThree(),
               matchDay(),
+              BestAtack(3),
+              BestDefence(3)
             ],
           ),
         ),

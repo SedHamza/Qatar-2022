@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:projet1/Model/users.dart';
 import 'package:projet1/compopente/UserItem.dart';
+import 'package:projet1/compopente/bestAtack.dart';
+import 'package:projet1/compopente/bestDefender.dart';
 import 'package:projet1/compopente/matchItem.dart';
 import 'package:projet1/constante/MyColors.dart';
 import 'package:projet1/provider/AllTeam.dart';
@@ -20,22 +22,12 @@ class CenterPage extends StatefulWidget {
 
 class _CenterPageState extends State<CenterPage> {
   Team_provider provider = Team_provider();
-  List<Usr> user = [];
+  User_Provider User_Prov = User_Provider();
 
   @override
   Widget build(BuildContext context) {
     provider = Provider.of<Team_provider>(context);
-    User_Provider User_Prov = Provider.of<User_Provider>(context);
-
-    User_Prov.users.sort(
-      (b, a) {
-        if (a.pts == b.pts) {
-          return (-a.taw.length).compareTo(-(b.taw.length));
-        }
-        return a.pts.compareTo(b.pts);
-      },
-    );
-    user = User_Prov.users;
+    User_Prov = Provider.of<User_Provider>(context);
 
     return Scaffold(
       body: Container(
@@ -48,6 +40,8 @@ class _CenterPageState extends State<CenterPage> {
               children: [
                 theBestThree(),
                 matchDay(),
+                BestAtack(3),
+                BestDefence(3)
               ],
             ),
           ),
@@ -100,9 +94,10 @@ class _CenterPageState extends State<CenterPage> {
               color: MyColors.firsteColor,
             ),
             Column(
-              children:
-                  List.generate(user.length > 3 ? 3 : user.length, (index) {
-                return UsersItems(user[index], index, false);
+              children: List.generate(
+                  User_Prov.users.length > 3 ? 3 : User_Prov.users.length,
+                  (index) {
+                return UsersItems(User_Prov.users[index], index, false);
               }),
             ),
           ],

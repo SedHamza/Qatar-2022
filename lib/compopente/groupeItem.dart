@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, must_be_immutable, use_key_in_widget_constructors, prefer_const_constructors, sized_box_for_whitespace, prefer_interpolation_to_compose_strings, avoid_print, avoid_unnecessary_containers
+// ignore_for_file: file_names, must_be_immutable, use_key_in_widget_constructors, prefer_const_constructors, sized_box_for_whitespace, prefer_interpolation_to_compose_strings, avoid_print, avoid_unnecessary_containers, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:projet1/Model/Standings.dart';
@@ -90,8 +90,7 @@ class _GroupeItemState extends State<GroupeItem> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 180,
+                Expanded(
                   child: Row(
                     children: [
                       Container(
@@ -118,45 +117,33 @@ class _GroupeItemState extends State<GroupeItem> {
                     ],
                   ),
                 ),
-                Expanded(
+                Container(
+                  width: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Expanded(
-                        child: Text(
-                          "P",
-                          style: TextStyle(
-                              color: MyColors.secondColor, fontSize: 12),
+                        child: Center(
+                          child: Text(
+                            "P",
+                            style: TextStyle(
+                                color: MyColors.secondColor, fontSize: 12),
+                          ),
                         ),
                       ),
                       SizedBox(
                         width: 10,
                       ),
-                      Expanded(
-                        child: Text(
-                          "G",
-                          style: TextStyle(
-                              color: MyColors.secondColor, fontSize: 12),
-                        ),
-                      ),
                       SizedBox(
                         width: 10,
                       ),
                       Expanded(
-                        child: Text(
-                          "D",
-                          style: TextStyle(
-                              color: MyColors.secondColor, fontSize: 12),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Text(
-                          "N",
-                          style: TextStyle(
-                              color: MyColors.secondColor, fontSize: 12),
+                        child: Center(
+                          child: Text(
+                            "DF",
+                            style: TextStyle(
+                                color: MyColors.secondColor, fontSize: 12),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -188,6 +175,22 @@ class _GroupeItemState extends State<GroupeItem> {
           .where((element) => element.group == g)
           .toList()
           .first;
+      grp.teams.sort(
+        (b, a) {
+          if (a.pts != b.pts) {
+            return int.parse(a.pts).compareTo(int.parse(b.pts));
+          } else {
+            if (a.gd != b.gd) {
+              return int.parse(a.gd).compareTo(int.parse(b.gd));
+            } else {
+              if (a.gf != b.gf) {
+                return int.parse(a.gf).compareTo(int.parse(b.gf));
+              }
+            }
+          }
+          return -(int.parse(a.ga)).compareTo(-(int.parse(b.ga)));
+        },
+      );
 
       return Card(
         elevation: 2,
@@ -200,8 +203,7 @@ class _GroupeItemState extends State<GroupeItem> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: 180,
+                    Expanded(
                       child: Row(
                         children: [
                           Container(
@@ -225,9 +227,13 @@ class _GroupeItemState extends State<GroupeItem> {
                             width: 5,
                           ),
                           CircleAvatar(
-                            radius: 10.0,
-                            backgroundImage: NetworkImage(team.flag),
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.grey,
+                            radius: 11,
+                            child: CircleAvatar(
+                              radius: 10.0,
+                              backgroundImage: NetworkImage(team.flag),
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                           SizedBox(
                             width: 5,
@@ -238,48 +244,30 @@ class _GroupeItemState extends State<GroupeItem> {
                         ],
                       ),
                     ),
-                    Expanded(
+                    Container(
+                      width: 100,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: Text(
-                              team.mp,
-                              style: TextStyle(
-                                  fontStyle: FontStyle.italic, fontSize: 12),
+                            child: Center(
+                              child: Text(
+                                team.mp,
+                                style: TextStyle(
+                                    fontStyle: FontStyle.italic, fontSize: 12),
+                              ),
                             ),
                           ),
                           SizedBox(
                             width: 10,
                           ),
                           Expanded(
-                            child: Text(
-                              team.w,
-                              style: TextStyle(
-                                  fontStyle: FontStyle.italic, fontSize: 12),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              team.l,
-                              style: TextStyle(
-                                  fontStyle: FontStyle.italic, fontSize: 12),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              (int.parse(team.mp) -
-                                      int.parse(team.w) -
-                                      int.parse(team.l))
-                                  .toString(),
-                              style: TextStyle(
-                                  fontStyle: FontStyle.italic, fontSize: 12),
+                            child: Center(
+                              child: Text(
+                                team.gd,
+                                style: TextStyle(
+                                    fontStyle: FontStyle.italic, fontSize: 12),
+                              ),
                             ),
                           ),
                           SizedBox(

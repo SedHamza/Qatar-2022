@@ -20,31 +20,21 @@ class WListUsers extends StatefulWidget {
 
 class _WListUsersState extends State<WListUsers> {
   Usr selectedUser = Usr("nom", "email", 0);
-  List<Usr> user = [];
   List<Tawa9oa> taw = [];
   List<Color> clrs = [
     Colors.amber,
     Color.fromARGB(255, 165, 134, 11),
     Color.fromARGB(255, 152, 128, 128)
   ];
+  User_Provider User_Prov = User_Provider();
   bool isHoverd = false;
   @override
-  void initState() {
-    User_Provider User_Prov =
-        Provider.of<User_Provider>(context, listen: false);
-    User_Prov.users.sort(
-      (b, a) {
-        if (a.pts == b.pts) {
-          return (-a.taw.length).compareTo(-(b.taw.length));
-        }
-        return a.pts.compareTo(b.pts);
-      },
-    );
-    user = User_Prov.users;
-  }
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
+    User_Prov = Provider.of<User_Provider>(context);
+
     return Scaffold(
       appBar: appBar(),
       body: Container(
@@ -59,8 +49,8 @@ class _WListUsersState extends State<WListUsers> {
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: List.generate(user.length > 3 ? 3 : user.length,
-                          (index) {
+                      children: List.generate(
+                          User_Prov.users.length , (index) {
                         return Item(index);
                       }),
                     ),
@@ -103,7 +93,7 @@ class _WListUsersState extends State<WListUsers> {
       focusColor: MyColors.firsteColor,
       onFocusChange: ((value) {
         setState(() {
-          selectedUser = user[index];
+          selectedUser = User_Prov.users[index];
           taw = selectedUser.taw;
           taw.sort((b, a) => a.pts!.compareTo(b.pts!));
         });
@@ -140,7 +130,7 @@ class _WListUsersState extends State<WListUsers> {
                         Row(
                           children: [
                             Text(
-                              user[index].nom,
+                              User_Prov.users[index].nom,
                               style: TextStyle(
                                 color: (index < 3)
                                     ? clrs[index]
@@ -154,9 +144,9 @@ class _WListUsersState extends State<WListUsers> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              user[index].pts.toString() +
+                              User_Prov.users[index].pts.toString() +
                                   " Pts / " +
-                                  user[index].taw.length.toString() +
+                                  User_Prov.users[index].taw.length.toString() +
                                   " Matchs",
                               style: TextStyle(
                                 color: (index < 3)
@@ -224,9 +214,13 @@ class _WListUsersState extends State<WListUsers> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CircleAvatar(
-                      radius: 17.0,
-                      backgroundImage: NetworkImage(match.homeFlag),
-                      backgroundColor: Colors.transparent,
+                      backgroundColor: Colors.grey,
+                      radius: 18,
+                      child: CircleAvatar(
+                        radius: 17.0,
+                        backgroundImage: NetworkImage(match.homeFlag),
+                        backgroundColor: Colors.transparent,
+                      ),
                     ),
                     Text(
                       tawa9oa.homeEx.toString(),
@@ -250,9 +244,13 @@ class _WListUsersState extends State<WListUsers> {
                           color: MyColors.firsteColor),
                     ),
                     CircleAvatar(
-                      radius: 17.0,
-                      backgroundImage: NetworkImage(match.awayFlag),
-                      backgroundColor: Colors.transparent,
+                      backgroundColor: Colors.grey,
+                      radius: 18,
+                      child: CircleAvatar(
+                        radius: 17.0,
+                        backgroundImage: NetworkImage(match.awayFlag),
+                        backgroundColor: Colors.transparent,
+                      ),
                     ),
                   ],
                 ),
@@ -311,9 +309,13 @@ class _WListUsersState extends State<WListUsers> {
                       Row(
                         children: [
                           CircleAvatar(
-                            radius: 17.0,
-                            backgroundImage: NetworkImage(match.homeFlag),
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.grey,
+                            radius: 18,
+                            child: CircleAvatar(
+                              radius: 17.0,
+                              backgroundImage: NetworkImage(match.homeFlag),
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -326,9 +328,13 @@ class _WListUsersState extends State<WListUsers> {
                             ),
                           ),
                           CircleAvatar(
-                            radius: 17.0,
-                            backgroundImage: NetworkImage(match.awayFlag),
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.grey,
+                            radius: 18,
+                            child: CircleAvatar(
+                              radius: 17.0,
+                              backgroundImage: NetworkImage(match.awayFlag),
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                         ],
                       ),

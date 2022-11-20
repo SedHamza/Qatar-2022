@@ -11,6 +11,14 @@ class User_Provider with ChangeNotifier {
   }
   getData() async {
     users = await GetUsrs();
+    users.sort(
+      (b, a) {
+        if (a.pts == b.pts) {
+          return (-a.taw.length).compareTo((-b.taw.length));
+        }
+        return a.pts.compareTo(b.pts);
+      },
+    );
     notifyListeners();
   }
 }

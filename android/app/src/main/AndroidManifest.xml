@@ -3,7 +3,7 @@
   	<uses-permission android:name="android.permission.INTERNET" />
 
    <application
-        android:label="CUP DU MONDE QATAR 2022"
+        android:label="Coupe Dd Monde Qatar 2022"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

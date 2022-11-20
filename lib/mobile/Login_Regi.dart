@@ -5,7 +5,6 @@ import 'package:projet1/constante/MyColors.dart';
 import 'package:projet1/firebase/authentification/authrntification.dart';
 import 'package:projet1/mobile/Mhome.dart';
 import 'package:projet1/mobile/splash_Screen.dart';
-import 'package:projet1/web/Wsplash_Screen.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

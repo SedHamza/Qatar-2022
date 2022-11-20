@@ -1,11 +1,9 @@
-// ignore_for_file: camel_case_types, file_names, prefer_const_constructors, prefer_const_constructors_in_immutables, unused_field, sort_child_properties_last, no_leading_underscores_for_local_identifiers
+// ignore_for_file: camel_case_types, file_names, prefer_const_constructors, prefer_const_constructors_in_immutables, unused_field, sort_child_properties_last, no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:projet1/constante/MyColors.dart';
-import 'package:projet1/constante/device_Size.dart';
-import 'package:projet1/mobile/Mhome.dart';
 import 'package:projet1/web/Whome.dart';
 
 class WSplash_Screen extends StatefulWidget {

@@ -160,9 +160,13 @@ class _UserViewState extends State<UserView> {
                     Column(
                       children: [
                         CircleAvatar(
-                          radius: 17.0,
-                          backgroundImage: NetworkImage(match.homeFlag),
-                          backgroundColor: Colors.transparent,
+                          backgroundColor: Colors.grey,
+                          radius: 18,
+                          child: CircleAvatar(
+                            radius: 17.0,
+                            backgroundImage: NetworkImage(match.homeFlag),
+                            backgroundColor: Colors.transparent,
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -359,7 +363,7 @@ class _UserViewState extends State<UserView> {
                             height: 5,
                           ),
                           Text(
-                            minBt(tawa9oa.maxBut!,
+                            minBt(tawa9oa.minBut!,
                                         match.awayScore + match.homeScore)
                                     .toString() +
                                 " Pts",
@@ -441,9 +445,13 @@ class _UserViewState extends State<UserView> {
                       Column(
                         children: [
                           CircleAvatar(
-                            radius: 17.0,
-                            backgroundImage: NetworkImage(match.homeFlag),
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.grey,
+                            radius: 18,
+                            child: CircleAvatar(
+                              radius: 17.0,
+                              backgroundImage: NetworkImage(match.homeFlag),
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -503,9 +511,13 @@ class _UserViewState extends State<UserView> {
                       Column(
                         children: [
                           CircleAvatar(
-                            radius: 17.0,
-                            backgroundImage: NetworkImage(match.awayFlag),
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.grey,
+                            radius: 18,
+                            child: CircleAvatar(
+                              radius: 17.0,
+                              backgroundImage: NetworkImage(match.awayFlag),
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -552,14 +564,14 @@ class _UserViewState extends State<UserView> {
   }
 
   int maxBt(int tM, int mM) {
-    if (tM > mM) {
+    if (tM >= mM) {
       return 7 - tM + 1;
     }
     return 0;
   }
 
   int minBt(int tM, int mM) {
-    if (tM < mM) {
+    if (tM <= mM) {
       return tM + 1;
     }
     return 0;

@@ -106,11 +106,8 @@ class _WDetaillMatchState extends State<WDetaillMatch> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: InkWell(
-                                      focusColor: MyColors.HoverColor,
-                                      onTap: () {},
-                                      child: Tawaqo3ParMatch(
-                                          GetMatchById(widget.id))),
+                                  child:
+                                      Tawaqo3ParMatch(GetMatchById(widget.id)),
                                 )
                               ],
                             ),

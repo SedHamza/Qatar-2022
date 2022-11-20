@@ -12,7 +12,7 @@ bool isStareMatch(Match match) {
   //now = DateTime.parse("2022-11-23 15:00:00");
   //now.day = 11;
 
-  if (match.finished == "true") {
+  if (match.finished == "TRUE") {
     return true;
   }
   if (match.localDate.day == now.day) {

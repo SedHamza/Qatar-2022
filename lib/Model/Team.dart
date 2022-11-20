@@ -53,6 +53,7 @@ class Teams {
   String TeamsId;
   int GF = 0;
   int GA = 0;
+  int matchs = 0;
 
   factory Teams.fromJson(Map<String, dynamic> json) {
     return Teams(

@@ -50,9 +50,13 @@ class _HomeMatchState extends State<HomeMatch> {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: CircleAvatar(
-                          radius: 17.0,
-                          backgroundImage: NetworkImage(team.flag),
-                          backgroundColor: Colors.transparent,
+                          radius: 18,
+                          backgroundColor: Colors.grey,
+                          child: CircleAvatar(
+                            radius: 17.0,
+                            backgroundImage: NetworkImage(team.flag),
+                            backgroundColor: Colors.transparent,
+                          ),
                         ),
                       ),
                       Text(
