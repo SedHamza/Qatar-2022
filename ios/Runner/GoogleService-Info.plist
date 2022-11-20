@@ -6,6 +6,8 @@
 	<string>998148765721-a05kjbt5a5tccn1sv49bupc6j3e8n2ih.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.998148765721-a05kjbt5a5tccn1sv49bupc6j3e8n2ih</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>998148765721-tlt0faqu9uru0mlr6a7ulh5fdfg9gmie.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCN7rGR7FTDz6AWy967tXWhGGGAZrm6HOE</string>
 	<key>GCM_SENDER_ID</key>
@@ -29,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:998148765721:ios:92a2f018b6d81528235288</string>
+	<string>1:998148765721:ios:2c341b8da62bddf8235288</string>
+	<key>DATABASE_URL</key>
+	<string>https://cup-du-mande-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
