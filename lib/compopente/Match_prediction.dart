@@ -12,6 +12,7 @@ import 'package:projet1/Model/tawaqoa.dart';
 import 'package:projet1/Model/users.dart';
 import 'package:projet1/constante/MyColors.dart';
 import 'package:projet1/Model/users.dart';
+import 'package:projet1/constante/device_Size.dart';
 
 import 'package:projet1/firebase/addTawaqoa.dart';
 import 'package:projet1/fonction/function.dart';
@@ -136,7 +137,7 @@ class _Match_predictionState extends State<Match_prediction> {
           (homeEx == -1 && awayEx == -1)
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: maxBut(),
+                  child: Scrinetype.isWeb ? maxButTV() : maxBut(),
                 )
               : Container(),
           (homeEx == -1 && awayEx == -1)
@@ -150,7 +151,7 @@ class _Match_predictionState extends State<Match_prediction> {
           (homeEx == -1 && awayEx == -1)
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: MinBut(),
+                  child: Scrinetype.isWeb ? MinButTV() : MinBut(),
                 )
               : Container(),
           (homeEx == -1 && awayEx == -1)
@@ -164,7 +165,7 @@ class _Match_predictionState extends State<Match_prediction> {
           (homeEx == -1 && awayEx == -1)
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: quiGagne(),
+                  child: Scrinetype.isWeb ? quiGagneTV() : quiGagne(),
                 )
               : Container(),
           SizedBox(
@@ -208,6 +209,7 @@ class _Match_predictionState extends State<Match_prediction> {
           Column(
             children: [
               InkWell(
+                focusColor: MyColors.HoverColor,
                 child: Icon(Icons.arrow_drop_up_outlined),
                 onTap: () {
                   if (!isStarted) {
@@ -232,6 +234,7 @@ class _Match_predictionState extends State<Match_prediction> {
                 ),
               ),
               InkWell(
+                focusColor: MyColors.HoverColor,
                 child: Icon(Icons.arrow_drop_down_outlined),
                 onTap: () {
                   if (!isStarted) {
@@ -276,6 +279,7 @@ class _Match_predictionState extends State<Match_prediction> {
           Column(
             children: [
               InkWell(
+                focusColor: MyColors.HoverColor,
                 child: Icon(Icons.arrow_drop_up_outlined),
                 onTap: () {
                   if (!isStarted) {
@@ -302,6 +306,7 @@ class _Match_predictionState extends State<Match_prediction> {
                 ),
               ),
               InkWell(
+                focusColor: MyColors.HoverColor,
                 child: Icon(Icons.arrow_drop_down_outlined),
                 onTap: () {
                   if (!isStarted) {
@@ -666,6 +671,7 @@ class _Match_predictionState extends State<Match_prediction> {
                     quiG = -1;
                   });
                 },
+                focusColor: MyColors.HoverColor,
                 child: Card(
                   color: MyColors.firsteColor,
                   child: Padding(
@@ -689,8 +695,9 @@ class _Match_predictionState extends State<Match_prediction> {
             : Container(),
         !isStarted
             ? InkWell(
+                focusColor: MyColors.HoverColor,
                 onTap: () {
-                  if (isStareMatch(widget.match)) {
+                  if (!isStareMatch(widget.match)) {
                     addPere(
                         [homeEx, awayEx, mxBut, mnBut, quiG], widget.match.id);
                     changeT();
@@ -761,5 +768,464 @@ class _Match_predictionState extends State<Match_prediction> {
       mx += 3;
     }
     return mx;
+  }
+
+  Widget MinButTV() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+              width: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Min But : ",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: MyColors.firsteColor,
+                    ),
+                  ),
+                  Text(
+                    mnBut == -1 ? "0 Pts" : (mnBut + 1).toString() + " Pts",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: MyColors.firsteColor,
+                    ),
+                  ),
+                ],
+              )),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "N",
+                      style: TextStyle(
+                          color: MyColors.firsteColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          mnBut = -1;
+                        });
+                      },
+                      focusColor: MyColors.HoverColor,
+                      child: Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: mnBut == -1 ? Colors.green : Colors.grey,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: mnBut == -1
+                                    ? MyColors.firsteColor
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                for (int i = 1;
+                    (i <= mxBut && mxBut != -1) || (mxBut == -1 && i < 7);
+                    i++)
+                  Column(
+                    children: [
+                      Text(
+                        i.toString(),
+                        style: TextStyle(
+                            color: MyColors.firsteColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            mnBut = i;
+                          });
+                        },
+                        focusColor: MyColors.HoverColor,
+                        child: Padding(
+                          padding: EdgeInsets.all(2.0),
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: mnBut == i ? Colors.green : Colors.grey,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(2.0),
+                              child: Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: mnBut == i
+                                      ? MyColors.firsteColor
+                                      : Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget maxButTV() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+              width: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Max But",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: MyColors.firsteColor,
+                    ),
+                  ),
+                  Text(
+                    mxBut == -1 ? "0 Pts" : (7 - mxBut + 1).toString() + " Pts",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: MyColors.firsteColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "N",
+                      style: TextStyle(
+                          color: MyColors.firsteColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          mxBut = -1;
+                        });
+                      },
+                      focusColor: MyColors.HoverColor,
+                      child: Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: mxBut == -1 ? Colors.green : Colors.grey,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: mxBut == -1
+                                    ? MyColors.firsteColor
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                for (int i = 1; i < 7; i++)
+                  Column(
+                    children: [
+                      Text(
+                        i.toString(),
+                        style: TextStyle(
+                            color: MyColors.firsteColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            mxBut = i;
+                          });
+                        },
+                        focusColor: MyColors.HoverColor,
+                        child: Padding(
+                          padding: EdgeInsets.all(2.0),
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: mxBut == i ? Colors.green : Colors.grey,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(2.0),
+                              child: Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: mxBut == i
+                                      ? MyColors.firsteColor
+                                      : Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget quiGagneTV() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+              width: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Qui Va Gagne : ",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: MyColors.firsteColor,
+                    ),
+                  ),
+                  Text(
+                    quiG == -1 ? "0 Pts" : "3 Pts",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: MyColors.firsteColor,
+                    ),
+                  ),
+                ],
+              )),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "N",
+                      style: TextStyle(
+                          color: MyColors.firsteColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          quiG = -1;
+                        });
+                      },
+                      focusColor: MyColors.HoverColor,
+                      child: Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: quiG == -1 ? Colors.green : Colors.grey,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: quiG == -1
+                                    ? MyColors.firsteColor
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      widget.match.homeTeamEn,
+                      style: TextStyle(
+                          color: MyColors.firsteColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          quiG = 1;
+                        });
+                      },
+                      focusColor: MyColors.HoverColor,
+                      child: Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: quiG == 1 ? Colors.green : Colors.grey,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: quiG == 1
+                                    ? MyColors.firsteColor
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      "égalité",
+                      style: TextStyle(
+                          color: MyColors.firsteColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          quiG = 0;
+                        });
+                      },
+                      focusColor: MyColors.HoverColor,
+                      child: Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: quiG == 0 ? Colors.green : Colors.grey,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: quiG == 0
+                                    ? MyColors.firsteColor
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      widget.match.awayTeamEn,
+                      style: TextStyle(
+                          color: MyColors.firsteColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          quiG = 2;
+                        });
+                      },
+                      focusColor: MyColors.HoverColor,
+                      child: Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: quiG == 2 ? Colors.green : Colors.grey,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: quiG == 2
+                                    ? MyColors.firsteColor
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

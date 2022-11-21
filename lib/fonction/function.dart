@@ -79,7 +79,6 @@ int comptePts(Tawa9oa tawa9oa) {
         tawa9oa.maxBut != -1) {
       pts += 7 - tawa9oa.maxBut! + 1;
     }
-    print(tawa9oa.minBut.toString() +"<= "+ (match.awayScore + match.homeScore).toString());
     if (tawa9oa.minBut! <= (match.awayScore + match.homeScore) &&
         tawa9oa.minBut != -1) {
       pts += tawa9oa.minBut! + 1;
