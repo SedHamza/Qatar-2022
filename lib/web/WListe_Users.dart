@@ -34,7 +34,14 @@ class _WListUsersState extends State<WListUsers> {
   @override
   Widget build(BuildContext context) {
     User_Prov = Provider.of<User_Provider>(context);
-
+    User_Prov.users.sort(
+      (b, a) {
+        if (a.pts == b.pts) {
+          return (-a.taw.length).compareTo((-b.taw.length));
+        }
+        return a.pts.compareTo(b.pts);
+      },
+    );
     return Scaffold(
       appBar: appBar(),
       body: Container(
@@ -49,8 +56,7 @@ class _WListUsersState extends State<WListUsers> {
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: List.generate(
-                          User_Prov.users.length , (index) {
+                      children: List.generate(User_Prov.users.length, (index) {
                         return Item(index);
                       }),
                     ),
@@ -425,7 +431,7 @@ class _WListUsersState extends State<WListUsers> {
                       ),
                       Divider(color: MyColors.firsteColor),
                       Text(
-                        gang(tawa9oa.qagne!, match.homeScore, match.homeScore)
+                        gang(tawa9oa.qagne!, match.homeScore, match.awayScore)
                                 .toString() +
                             " Pts",
                         style: TextStyle(

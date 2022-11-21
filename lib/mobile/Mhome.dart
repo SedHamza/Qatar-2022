@@ -156,7 +156,7 @@ class _MHomeState extends State<MHome> {
             ),
             Column(
               children: List.generate(
-                  User_Prov.users.length > 3 ? 3 : User_Prov.users.length,
+                  User_Prov.users.length  > 3 ? 3 : User_Prov.users.length,
                   (index) {
                 return UsersItems(User_Prov.users[index], index, true);
               }),
@@ -177,6 +177,9 @@ class _MHomeState extends State<MHome> {
               element.localDate.month == now.month)
           .toList();
     }
+    matchs.sort(
+      (a, b) => a.localDate.hour.compareTo(b.localDate.hour),
+    );
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Container(

@@ -1,7 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors, avoid_unnecessary_containers, must_call_super, non_constant_identifier_names, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:projet1/Model/users.dart';
 import 'package:projet1/compopente/UserItem.dart';
 import 'package:projet1/constante/MyColors.dart';
 import 'package:projet1/provider/Users_Prpvider.dart';
@@ -18,6 +17,14 @@ class _ListUsersState extends State<ListUsers> {
   @override
   Widget build(BuildContext context) {
     User_Provider User_Prov = Provider.of<User_Provider>(context);
+    User_Prov.users.sort(
+      (b, a) {
+        if (a.pts == b.pts) {
+          return (-a.taw.length).compareTo((-b.taw.length));
+        }
+        return a.pts.compareTo(b.pts);
+      },
+    );
     return Scaffold(
       appBar: appBar(),
       body: Container(

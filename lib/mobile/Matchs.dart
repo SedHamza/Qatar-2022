@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, file_names, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, file_names, avoid_unnecessary_containers, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:projet1/Model/Matchs.dart';
@@ -29,9 +29,27 @@ class _MatchsListeState extends State<MatchsListe> {
           child: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Column(
-          children: List.generate(
-              dates.length, (index) => listeDateMatch(dates[index])),
-        ),
+            children: dates.isNotEmpty
+                ? List.generate(
+                    dates.length, (index) => listeDateMatch(dates[index]))
+                : [
+                    Card(
+                      child: Container(
+                        width: double.infinity,
+                        child: Center(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Problème de Connection",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: MyColors.firsteColor),
+                          ),
+                        )),
+                      ),
+                    )
+                  ]),
       )),
     );
   }
@@ -42,6 +60,9 @@ class _MatchsListeState extends State<MatchsListe> {
             element.localDate.day == date.day &&
             element.localDate.month == date.month)
         .toList();
+    dtmatch.sort(
+      (a, b) => a.localDate.hour.compareTo(b.localDate.hour),
+    );
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -71,8 +92,8 @@ class _MatchsListeState extends State<MatchsListe> {
               color: MyColors.firsteColor,
             ),
             Column(
-              children: List.generate(
-                  dtmatch.length, (index) => MatchItem(dtmatch[index].id,true)),
+              children: List.generate(dtmatch.length,
+                  (index) => MatchItem(dtmatch[index].id, true)),
             ),
           ],
         ),

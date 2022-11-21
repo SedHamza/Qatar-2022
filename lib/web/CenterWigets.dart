@@ -1,7 +1,6 @@
 // ignore_for_file: file_names, avoid_unnecessary_containers, unused_local_variable, prefer_const_constructors, prefer_interpolation_to_compose_strings, non_constant_identifier_names, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:projet1/Model/users.dart';
 import 'package:projet1/compopente/UserItem.dart';
 import 'package:projet1/compopente/bestAtack.dart';
 import 'package:projet1/compopente/bestDefender.dart';
@@ -117,7 +116,9 @@ class _CenterPageState extends State<CenterPage> {
               element.localDate.month == now.month)
           .toList();
     }
-
+    matchs.sort(
+      (a, b) => a.localDate.hour.compareTo(b.localDate.hour),
+    );
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Container(

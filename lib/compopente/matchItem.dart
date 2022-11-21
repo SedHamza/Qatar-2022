@@ -27,6 +27,7 @@ class _MatchItemState extends State<MatchItem> {
   @override
   Widget build(BuildContext context) {
     Team_provider provider = Provider.of<Team_provider>(context);
+
     Match match =
         provider.matchs.data.where((element) => element.id == widget.id).first;
     bool started = isStareMatch(match);

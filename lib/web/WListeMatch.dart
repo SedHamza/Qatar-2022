@@ -42,7 +42,9 @@ class _WListeMatchState extends State<WListeMatch> {
             element.localDate.day == date.day &&
             element.localDate.month == date.month)
         .toList();
-
+    dtmatch.sort(
+      (a, b) => a.localDate.hour.compareTo(b.localDate.hour),
+    );
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(

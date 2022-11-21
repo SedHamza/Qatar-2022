@@ -58,6 +58,7 @@ List<Teams> BestAttack() {
 }
 
 int comptePts(Tawa9oa tawa9oa) {
+
   int pts = 0;
   try {
     Match match = MyApp.provider.matchs.data
@@ -67,6 +68,7 @@ int comptePts(Tawa9oa tawa9oa) {
       return 0;
     }
     if (tawa9oa.awayEx != -1) {
+      //exacte result
       if (tawa9oa.awayEx == match.awayScore &&
           tawa9oa.homeEx == match.homeScore) {
         return 20;
@@ -77,8 +79,9 @@ int comptePts(Tawa9oa tawa9oa) {
         tawa9oa.maxBut != -1) {
       pts += 7 - tawa9oa.maxBut! + 1;
     }
+    print(tawa9oa.minBut.toString() +"<= "+ (match.awayScore + match.homeScore).toString());
     if (tawa9oa.minBut! <= (match.awayScore + match.homeScore) &&
-        tawa9oa.maxBut != -1) {
+        tawa9oa.minBut != -1) {
       pts += tawa9oa.minBut! + 1;
     }
     if (tawa9oa.qagne != -1) {

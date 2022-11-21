@@ -401,7 +401,7 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
                           ),
                           Text(
                             gang(tawa9oa.qagne!, match.homeScore,
-                                        match.homeScore)
+                                        match.awayScore)
                                     .toString() +
                                 " Pts",
                             style: TextStyle(

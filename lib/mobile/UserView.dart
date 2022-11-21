@@ -48,7 +48,24 @@ class _UserViewState extends State<UserView> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ListeTawa9o3(),
+                child: matchs.isNotEmpty
+                    ? ListeTawa9o3()
+                    : Card(
+                        child: Container(
+                          width: double.infinity,
+                          child: Center(
+                              child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Problème de Connection",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: MyColors.firsteColor),
+                            ),
+                          )),
+                        ),
+                      ),
               )
             ],
           ),
@@ -377,7 +394,7 @@ class _UserViewState extends State<UserView> {
                           ),
                           Text(
                             gang(tawa9oa.qagne!, match.homeScore,
-                                        match.homeScore)
+                                        match.awayScore)
                                     .toString() +
                                 " Pts",
                             style: TextStyle(
