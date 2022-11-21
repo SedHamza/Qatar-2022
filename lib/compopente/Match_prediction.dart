@@ -690,16 +690,26 @@ class _Match_predictionState extends State<Match_prediction> {
         !isStarted
             ? InkWell(
                 onTap: () {
-                  addPere(
-                      [homeEx, awayEx, mxBut, mnBut, quiG], widget.match.id);
-                  changeT();
-                  AwesomeDialog(
-                    context: context,
-                    animType: AnimType.TOPSLIDE,
-                    dialogType: DialogType.success,
-                    title: "Succès",
-                    desc: "Les Prédiction sont été envoyées avec succès",
-                  ).show();
+                  if (isStareMatch(widget.match)) {
+                    addPere(
+                        [homeEx, awayEx, mxBut, mnBut, quiG], widget.match.id);
+                    changeT();
+                    AwesomeDialog(
+                      context: context,
+                      animType: AnimType.TOPSLIDE,
+                      dialogType: DialogType.success,
+                      title: "Succès",
+                      desc: "Les Prédiction sont été envoyées avec succès",
+                    ).show();
+                  } else {
+                    AwesomeDialog(
+                      context: context,
+                      animType: AnimType.TOPSLIDE,
+                      dialogType: DialogType.error,
+                      title: "Erreur",
+                      desc: "Le match est déjà commencé",
+                    ).show();
+                  }
                 },
                 child: Card(
                   color: MyColors.firsteColor,

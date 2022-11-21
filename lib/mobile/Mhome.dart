@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, file_names, prefer_interpolation_to_compose_strings, unused_local_variable, avoid_print, unused_import, non_constant_identifier_names, dead_code, sized_box_for_whitespace
 
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class _MHomeState extends State<MHome> {
     provider = Provider.of<Team_provider>(context);
     List<Widget> Pages = [Home(), Groupes()];
     User_Prov = Provider.of<User_Provider>(context);
+
     if (provider.matchs.data.isNotEmpty) {
       for (var element in User_Prov.users) {
         int pts = 0;
@@ -156,7 +158,7 @@ class _MHomeState extends State<MHome> {
             ),
             Column(
               children: List.generate(
-                  User_Prov.users.length  > 3 ? 3 : User_Prov.users.length,
+                  User_Prov.users.length > 3 ? 3 : User_Prov.users.length,
                   (index) {
                 return UsersItems(User_Prov.users[index], index, true);
               }),
