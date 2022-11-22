@@ -29,7 +29,10 @@ class _BestAtackState extends State<BestAtack> {
     teams.sort(
       (b, a) {
         if (a.GF == b.GF) {
-          return (-a.matchs).compareTo(-b.matchs);
+          if (a.matchs != b.matchs) {
+            return (-a.matchs).compareTo(-b.matchs);
+          }
+          return (-a.GA).compareTo(-b.GF);
         }
         return a.GF.compareTo(b.GF);
       },

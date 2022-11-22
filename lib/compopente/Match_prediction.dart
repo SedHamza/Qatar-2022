@@ -197,7 +197,7 @@ class _Match_predictionState extends State<Match_prediction> {
                 ),
               ),
               Text(
-                "20 Pts",
+                "25 Pts",
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
@@ -330,6 +330,120 @@ class _Match_predictionState extends State<Match_prediction> {
     );
   }
 
+  Widget button() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        !isStarted
+            ? InkWell(
+                onTap: () {
+                  setState(() {
+                    homeEx = -1;
+                    awayEx = -1;
+                    mxBut = -1;
+                    mnBut = -1;
+                    quiG = -1;
+                  });
+                },
+                focusColor: MyColors.HoverColor,
+                child: Card(
+                  color: MyColors.firsteColor,
+                  child: Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Effacer",
+                          style: TextStyle(color: MyColors.secondColor),
+                        ),
+                        Icon(
+                          Icons.close,
+                          size: 40,
+                          color: MyColors.secondColor,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
+        !isStarted
+            ? InkWell(
+                focusColor: MyColors.HoverColor,
+                onTap: () {
+                  if (!isStareMatch(widget.match)) {
+                    addPere(
+                        [homeEx, awayEx, mxBut, mnBut, quiG], widget.match.id);
+                    changeT();
+                    AwesomeDialog(
+                      context: context,
+                      animType: AnimType.TOPSLIDE,
+                      dialogType: DialogType.success,
+                      title: "Succès",
+                      desc: "Les Prédiction sont été envoyées avec succès",
+                    ).show();
+                  } else {
+                    AwesomeDialog(
+                      context: context,
+                      animType: AnimType.TOPSLIDE,
+                      dialogType: DialogType.error,
+                      title: "Erreur",
+                      desc: "Le match est déjà commencé",
+                    ).show();
+                  }
+                },
+                child: Card(
+                  color: MyColors.firsteColor,
+                  child: Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Envoyee",
+                          style: TextStyle(color: MyColors.secondColor),
+                        ),
+                        Icon(
+                          Icons.arrow_right_outlined,
+                          size: 40,
+                          color: MyColors.secondColor,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
+      ],
+    );
+  }
+
+  void changeT() {
+    tawa9oa = Tawa9oa(widget.match.id, homeEx, awayEx, mxBut, mnBut, quiG, 0);
+    var user = user_Prov.users
+        .where((element) =>
+            element.email == FirebaseAuth.instance.currentUser?.email)
+        .first;
+    user.taw.removeWhere((element) => element.id == tawa9oa.id);
+    user.taw.add(tawa9oa);
+  }
+
+  int maxPts() {
+    int mx = 0;
+    if (homeEx != -1) {
+      return 25;
+    }
+    if (mxBut != -1) {
+      mx = (7 - mxBut) * 2;
+    }
+    if (mnBut != -1) {
+      mx += mnBut * 2;
+    }
+    if (quiG != -1) {
+      mx += 5;
+    }
+    return mx;
+  }
+
   Widget maxBut() {
     return Container(
       child: Row(
@@ -349,7 +463,9 @@ class _Match_predictionState extends State<Match_prediction> {
                     ),
                   ),
                   Text(
-                    mxBut == -1 ? "0 Pts" : (7 - mxBut + 1).toString() + " Pts",
+                    mxBut == -1
+                        ? "0 Pts"
+                        : ((7 - mxBut) * 2).toString() + " Pts",
                     style: TextStyle(
                         fontSize: 15,
                         color: MyColors.firsteColor,
@@ -386,7 +502,7 @@ class _Match_predictionState extends State<Match_prediction> {
                         customBgColor: MyColors.firsteColor),
                   ],
                 ),
-                for (int i = 1; i < 7; i++)
+                for (int i = 1; i < 7 && mnBut == -1; i++)
                   Column(
                     children: [
                       Text(
@@ -405,14 +521,262 @@ class _Match_predictionState extends State<Match_prediction> {
                             if (!isStarted) {
                               setState(() {
                                 mxBut = value;
-                                if (mxBut < mnBut) {
-                                  mnBut = mxBut;
-                                }
                               });
                             }
                           },
                           inactiveIcon: null,
                           customBgColor: MyColors.firsteColor),
+                    ],
+                  ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget maxButTV() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+              width: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Max But",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: MyColors.firsteColor,
+                    ),
+                  ),
+                  Text(
+                    mxBut == -1
+                        ? "0 Pts"
+                        : ((7 - mxBut) * 2).toString() + " Pts",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: MyColors.firsteColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "N",
+                      style: TextStyle(
+                          color: MyColors.firsteColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          mxBut = -1;
+                        });
+                      },
+                      focusColor: MyColors.HoverColor,
+                      child: Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: mxBut == -1 ? Colors.green : Colors.grey,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: mxBut == -1
+                                    ? MyColors.firsteColor
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                for (int i = 1; i < 7 && mnBut == -1; i++)
+                  Column(
+                    children: [
+                      Text(
+                        i.toString(),
+                        style: TextStyle(
+                            color: MyColors.firsteColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            mxBut = i;
+                          });
+                        },
+                        focusColor: MyColors.HoverColor,
+                        child: Padding(
+                          padding: EdgeInsets.all(2.0),
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: mxBut == i ? Colors.green : Colors.grey,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(2.0),
+                              child: Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: mxBut == i
+                                      ? MyColors.firsteColor
+                                      : Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget MinButTV() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+              width: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Min But : ",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: MyColors.firsteColor,
+                    ),
+                  ),
+                  Text(
+                    mnBut == -1 ? "0 Pts" : (mnBut * 2).toString() + " Pts",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: MyColors.firsteColor,
+                    ),
+                  ),
+                ],
+              )),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "N",
+                      style: TextStyle(
+                          color: MyColors.firsteColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          mnBut = -1;
+                        });
+                      },
+                      focusColor: MyColors.HoverColor,
+                      child: Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: mnBut == -1 ? Colors.green : Colors.grey,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: mnBut == -1
+                                    ? MyColors.firsteColor
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                for (int i = 1; i < 7 && mxBut == -1; i++)
+                  Column(
+                    children: [
+                      Text(
+                        i.toString(),
+                        style: TextStyle(
+                            color: MyColors.firsteColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            mnBut = i;
+                          });
+                        },
+                        focusColor: MyColors.HoverColor,
+                        child: Padding(
+                          padding: EdgeInsets.all(2.0),
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: mnBut == i ? Colors.green : Colors.grey,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(2.0),
+                              child: Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: mnBut == i
+                                      ? MyColors.firsteColor
+                                      : Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
               ],
@@ -442,7 +806,7 @@ class _Match_predictionState extends State<Match_prediction> {
                     ),
                   ),
                   Text(
-                    mnBut == -1 ? "0 Pts" : (mnBut + 1).toString() + " Pts",
+                    mnBut == -1 ? "0 Pts" : (mnBut * 2).toString() + " Pts",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -480,9 +844,7 @@ class _Match_predictionState extends State<Match_prediction> {
                         customBgColor: MyColors.firsteColor),
                   ],
                 ),
-                for (int i = 1;
-                    (i <= mxBut && mxBut != -1) || (mxBut == -1 && i < 7);
-                    i++)
+                for (int i = 1; i < 7 && mxBut == -1; i++)
                   Column(
                     children: [
                       Text(
@@ -535,7 +897,7 @@ class _Match_predictionState extends State<Match_prediction> {
                     ),
                   ),
                   Text(
-                    quiG == -1 ? "0 Pts" : "3 Pts",
+                    quiG == -1 ? "0 Pts" : "5 Pts",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -656,371 +1018,6 @@ class _Match_predictionState extends State<Match_prediction> {
     );
   }
 
-  Widget button() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        !isStarted
-            ? InkWell(
-                onTap: () {
-                  setState(() {
-                    homeEx = -1;
-                    awayEx = -1;
-                    mxBut = -1;
-                    mnBut = -1;
-                    quiG = -1;
-                  });
-                },
-                focusColor: MyColors.HoverColor,
-                child: Card(
-                  color: MyColors.firsteColor,
-                  child: Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Effacer",
-                          style: TextStyle(color: MyColors.secondColor),
-                        ),
-                        Icon(
-                          Icons.close,
-                          size: 40,
-                          color: MyColors.secondColor,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            : Container(),
-        !isStarted
-            ? InkWell(
-                focusColor: MyColors.HoverColor,
-                onTap: () {
-                  if (!isStareMatch(widget.match)) {
-                    addPere(
-                        [homeEx, awayEx, mxBut, mnBut, quiG], widget.match.id);
-                    changeT();
-                    AwesomeDialog(
-                      context: context,
-                      animType: AnimType.TOPSLIDE,
-                      dialogType: DialogType.success,
-                      title: "Succès",
-                      desc: "Les Prédiction sont été envoyées avec succès",
-                    ).show();
-                  } else {
-                    AwesomeDialog(
-                      context: context,
-                      animType: AnimType.TOPSLIDE,
-                      dialogType: DialogType.error,
-                      title: "Erreur",
-                      desc: "Le match est déjà commencé",
-                    ).show();
-                  }
-                },
-                child: Card(
-                  color: MyColors.firsteColor,
-                  child: Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Envoyee",
-                          style: TextStyle(color: MyColors.secondColor),
-                        ),
-                        Icon(
-                          Icons.arrow_right_outlined,
-                          size: 40,
-                          color: MyColors.secondColor,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            : Container(),
-      ],
-    );
-  }
-
-  void changeT() {
-    tawa9oa = Tawa9oa(widget.match.id, homeEx, awayEx, mxBut, mnBut, quiG, 0);
-    var user = user_Prov.users
-        .where((element) =>
-            element.email == FirebaseAuth.instance.currentUser?.email)
-        .first;
-    user.taw.removeWhere((element) => element.id == tawa9oa.id);
-    user.taw.add(tawa9oa);
-  }
-
-  int maxPts() {
-    int mx = 0;
-    if (homeEx != -1) {
-      return 20;
-    }
-    if (mxBut != -1) {
-      mx = (7 - mxBut) + 1;
-    }
-    if (mnBut != -1) {
-      mx += mnBut + 1;
-    }
-    if (quiG != -1) {
-      mx += 3;
-    }
-    return mx;
-  }
-
-  Widget MinButTV() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-              width: 100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Min But : ",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: MyColors.firsteColor,
-                    ),
-                  ),
-                  Text(
-                    mnBut == -1 ? "0 Pts" : (mnBut + 1).toString() + " Pts",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      color: MyColors.firsteColor,
-                    ),
-                  ),
-                ],
-              )),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      "N",
-                      style: TextStyle(
-                          color: MyColors.firsteColor,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          mnBut = -1;
-                        });
-                      },
-                      focusColor: MyColors.HoverColor,
-                      child: Padding(
-                        padding: EdgeInsets.all(2.0),
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: mnBut == -1 ? Colors.green : Colors.grey,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(2.0),
-                            child: Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: mnBut == -1
-                                    ? MyColors.firsteColor
-                                    : Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                for (int i = 1;
-                    (i <= mxBut && mxBut != -1) || (mxBut == -1 && i < 7);
-                    i++)
-                  Column(
-                    children: [
-                      Text(
-                        i.toString(),
-                        style: TextStyle(
-                            color: MyColors.firsteColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            mnBut = i;
-                          });
-                        },
-                        focusColor: MyColors.HoverColor,
-                        child: Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: mnBut == i ? Colors.green : Colors.grey,
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(2.0),
-                              child: Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: mnBut == i
-                                      ? MyColors.firsteColor
-                                      : Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget maxButTV() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-              width: 100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Max But",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: MyColors.firsteColor,
-                    ),
-                  ),
-                  Text(
-                    mxBut == -1 ? "0 Pts" : (7 - mxBut + 1).toString() + " Pts",
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: MyColors.firsteColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      "N",
-                      style: TextStyle(
-                          color: MyColors.firsteColor,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          mxBut = -1;
-                        });
-                      },
-                      focusColor: MyColors.HoverColor,
-                      child: Padding(
-                        padding: EdgeInsets.all(2.0),
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: mxBut == -1 ? Colors.green : Colors.grey,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(2.0),
-                            child: Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: mxBut == -1
-                                    ? MyColors.firsteColor
-                                    : Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                for (int i = 1; i < 7; i++)
-                  Column(
-                    children: [
-                      Text(
-                        i.toString(),
-                        style: TextStyle(
-                            color: MyColors.firsteColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            mxBut = i;
-                          });
-                        },
-                        focusColor: MyColors.HoverColor,
-                        child: Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: mxBut == i ? Colors.green : Colors.grey,
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(2.0),
-                              child: Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: mxBut == i
-                                      ? MyColors.firsteColor
-                                      : Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
   Widget quiGagneTV() {
     return Container(
       child: Row(
@@ -1040,7 +1037,7 @@ class _Match_predictionState extends State<Match_prediction> {
                     ),
                   ),
                   Text(
-                    quiG == -1 ? "0 Pts" : "3 Pts",
+                    quiG == -1 ? "0 Pts" : "5 Pts",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,

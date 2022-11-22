@@ -581,28 +581,34 @@ class _UserViewState extends State<UserView> {
   }
 
   int maxBt(int tM, int mM) {
+    if (tM == -1) {
+      return 0;
+    }
     if (tM >= mM) {
-      return 7 - tM + 1;
+      return (7 - tM) * 2;
     }
     return 0;
   }
 
   int minBt(int tM, int mM) {
+    if (tM == -1) {
+      return 0;
+    }
     if (tM <= mM) {
-      return tM + 1;
+      return tM * 2;
     }
     return 0;
   }
 
   int gang(int tM, int hb, int ab) {
     if (tM == 0 && hb == ab) {
-      return 3;
+      return 5;
     }
     if (tM == 1 && hb > ab) {
-      return 3;
+      return 5;
     }
     if (tM == 2 && hb < ab) {
-      return 3;
+      return 5;
     }
     return 0;
   }
@@ -610,16 +616,16 @@ class _UserViewState extends State<UserView> {
   int maxPts(Tawa9oa tawa9oa) {
     int mx = 0;
     if (tawa9oa.homeEx != -1) {
-      return 20;
+      return 25;
     }
     if (tawa9oa.maxBut != -1) {
-      mx = (7 - tawa9oa.maxBut!) + 1;
+      mx = (7 - tawa9oa.maxBut!) * 2;
     }
     if (tawa9oa.minBut != -1) {
-      mx += tawa9oa.minBut! + 1;
+      mx += tawa9oa.minBut! * 2;
     }
     if (tawa9oa.qagne != -1) {
-      mx += 3;
+      mx += 5;
     }
     return mx;
   }

@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, prefer_const_constructors, sized_box_for_whitespace, prefer_interpolation_to_compose_strings, file_names, non_constant_identifier_names
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, prefer_const_constructors, sized_box_for_whitespace, prefer_interpolation_to_compose_strings, file_names, non_constant_identifier_names, avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -565,7 +565,7 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
       return 0;
     }
     if (tM >= mM) {
-      return 7 - tM + 1;
+      return (7 - tM) * 2;
     }
     return 0;
   }
@@ -575,20 +575,20 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
       return 0;
     }
     if (tM <= mM) {
-      return tM + 1;
+      return tM * 2;
     }
     return 0;
   }
 
   int gang(int tM, int hb, int ab) {
     if (tM == 0 && hb == ab) {
-      return 3;
+      return 5;
     }
     if (tM == 1 && hb > ab) {
-      return 3;
+      return 5;
     }
     if (tM == 2 && hb < ab) {
-      return 3;
+      return 5;
     }
     return 0;
   }
@@ -596,16 +596,16 @@ class _Tawaqo3ParMatchState extends State<Tawaqo3ParMatch> {
   int maxPts(Tawa9oa tawa9oa) {
     int mx = 0;
     if (tawa9oa.homeEx != -1) {
-      return 20;
+      return 25;
     }
     if (tawa9oa.maxBut != -1) {
-      mx = (7 - tawa9oa.maxBut!) + 1;
+      mx = (7 - tawa9oa.maxBut!) * 2;
     }
     if (tawa9oa.minBut != -1) {
-      mx += tawa9oa.minBut! + 1;
+      mx += tawa9oa.minBut! * 2;
     }
     if (tawa9oa.qagne != -1) {
-      mx += 3;
+      mx += 5;
     }
     return mx;
   }
